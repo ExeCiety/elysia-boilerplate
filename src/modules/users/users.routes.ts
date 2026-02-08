@@ -13,9 +13,11 @@ export const usersRoutes = new Elysia({ prefix: '/users' })
     // POST /users - Create a new user
     .post(
         '/',
-        async ({ body, store }) => {
+        async ({ body, store, set }) => {
             const requestId = (store as { requestId: string }).requestId
-            return controller.create(body, requestId)
+            const response = await controller.create(body, requestId)
+            set.status = 201
+            return response
         },
         {
             body: createUserSchema,
