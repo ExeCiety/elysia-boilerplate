@@ -1,0 +1,71 @@
+{
+    "version": "7",
+    "dialect": "postgresql",
+    "tables": {
+        "public.users": {
+            "name": "users",
+            "schema": "",
+            "columns": {
+                "id": {
+                    "name": "id",
+                    "type": "uuid",
+                    "primaryKey": true,
+                    "notNull": true,
+                    "default": "gen_random_uuid()"
+                },
+                "name": {
+                    "name": "name",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "email": {
+                    "name": "email",
+                    "type": "varchar(255)",
+                    "primaryKey": false,
+                    "notNull": true
+                },
+                "created_at": {
+                    "name": "created_at",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                },
+                "updated_at": {
+                    "name": "updated_at",
+                    "type": "timestamp with time zone",
+                    "primaryKey": false,
+                    "notNull": true,
+                    "default": "now()"
+                }
+            },
+            "indexes": {
+                "users_email_unique_idx": {
+                    "name": "users_email_unique_idx",
+                    "columns": [
+                        "email"
+                    ],
+                    "isUnique": true
+                },
+                "users_created_at_idx": {
+                    "name": "users_created_at_idx",
+                    "columns": [
+                        "created_at"
+                    ],
+                    "isUnique": false
+                }
+            },
+            "foreignKeys": {},
+            "compositePrimaryKeys": {},
+            "uniqueConstraints": {}
+        }
+    },
+    "enums": {},
+    "schemas": {},
+    "_meta": {
+        "schemas": {},
+        "tables": {},
+        "columns": {}
+    }
+}
