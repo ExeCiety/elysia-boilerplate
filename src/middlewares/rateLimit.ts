@@ -21,14 +21,14 @@ setInterval(() => {
     }
 }, 60000) // Cleanup every minute
 
-function getClientIp(request: Request, headers: Headers): string {
+function getClientIp(headers: Record<string, string | undefined>): string {
     // Check common headers for client IP (when behind a proxy)
-    const forwardedFor = headers.get('x-forwarded-for')
+    const forwardedFor = headers['x-forwarded-for']
     if (forwardedFor) {
         return forwardedFor.split(',')[0].trim()
     }
 
-    const realIp = headers.get('x-real-ip')
+    const realIp = headers['x-real-ip']
     if (realIp) {
         return realIp
     }
@@ -38,8 +38,8 @@ function getClientIp(request: Request, headers: Headers): string {
 }
 
 export const rateLimitMiddleware = new Elysia({ name: 'rateLimit' })
-    .derive(({ request, headers }) => {
-        const clientIp = getClientIp(request, headers)
+    .derive(({ headers }) => {
+        const clientIp = getClientIp(headers)
         return { clientIp }
     })
     .onBeforeHandle(({ clientIp, store }) => {
@@ -82,3 +82,4 @@ export const rateLimitMiddleware = new Elysia({ name: 'rateLimit' })
         set.headers['X-RateLimit-Remaining'] = String(Math.max(0, remaining))
         set.headers['X-RateLimit-Reset'] = String(Math.ceil(reset / 1000))
     })
+    .as('global')

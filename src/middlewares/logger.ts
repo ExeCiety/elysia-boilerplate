@@ -126,6 +126,7 @@ export const loggerMiddleware = new Elysia({ name: 'logger' })
             },
         })
     })
+    .as('global')
 
 // Export logger utility for use elsewhere
 export const logger = {

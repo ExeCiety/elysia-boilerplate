@@ -34,3 +34,4 @@ export const secureHeadersMiddleware = new Elysia({ name: 'secureHeaders' })
         set.headers['Pragma'] = 'no-cache'
         set.headers['Expires'] = '0'
     })
+    .as('global')

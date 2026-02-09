@@ -13,3 +13,4 @@ export const corsMiddleware = new Elysia({ name: 'cors' }).use(
         maxAge: 86400, // 24 hours
     })
 )
+    .as('global')

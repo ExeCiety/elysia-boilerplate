@@ -21,3 +21,4 @@ export const requestIdMiddleware = new Elysia({ name: 'requestId' })
         const requestId = (store as Record<string, unknown>).requestId as string
         set.headers['X-Request-Id'] = requestId
     })
+    .as('global')
