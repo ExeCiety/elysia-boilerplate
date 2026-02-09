@@ -44,6 +44,11 @@ export const rateLimitMiddleware = new Elysia({ name: 'rateLimit' })
     })
     .onBeforeHandle(({ clientIp, store }) => {
         const { max, windowMs } = config.rateLimit
+
+        if (max === 0) {
+            return
+        }
+
         const now = Date.now()
         const key = clientIp
 
@@ -75,6 +80,11 @@ export const rateLimitMiddleware = new Elysia({ name: 'rateLimit' })
     })
     .onAfterHandle(({ store, set }) => {
         const { max } = config.rateLimit
+
+        if (max === 0) {
+            return
+        }
+
         const remaining = (store as Record<string, unknown>).rateLimitRemaining as number
         const reset = (store as Record<string, unknown>).rateLimitReset as number
 
